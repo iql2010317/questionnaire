@@ -45,6 +45,14 @@ class QuestionnaireApplicationTests {
 	    System.out.println("================================");
 	}
 	
+	@Test
+	//搜尋名稱 開始時間 結束時間 可以為空
+	public void searchTest1() {
+	    System.out.println("================================");
+	    quizService.search("happy", null, null);
+	    System.out.println("================================");
+	}
+	
 	
 	
 

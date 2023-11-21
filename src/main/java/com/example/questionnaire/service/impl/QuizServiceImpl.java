@@ -34,6 +34,9 @@ public class QuizServiceImpl implements QuizService {
 	@Transactional
 	@Override // 資料庫需要防範的東西 //寫資料庫的動作~
 	public QuizRes create(QuizReq req) {
+
+		List<QuizVo> quizVoList = new ArrayList<>();
+
 		QuizRes checkResult = checkParam(req);
 		if (checkResult != null) {
 			return checkResult;
@@ -41,13 +44,16 @@ public class QuizServiceImpl implements QuizService {
 		int qnid = qnDao.save(req.getQuestionnaire()).getId();
 		List<Question> quList = req.getQuestionList();
 		if (quList.isEmpty()) {
-			return new QuizRes(RtnCode.SUCCESSFUL);
+			return new QuizRes(quizVoList, RtnCode.SUCCESSFUL);
+//		} else {
+//			quizVoList.add(req);
 		}
 		for (Question qu : quList) {
 			qu.setQnId(qnid);
 		}
-		quDao.saveAll(quList);
-		return new QuizRes(RtnCode.SUCCESSFUL);
+//		quDao.saveAll(quList);
+		quDao.saveAll(req.getQuestionList());
+		return new QuizRes(quizVoList, RtnCode.SUCCESSFUL);
 	}
 
 	private QuizRes checkParam(QuizReq req) {
@@ -59,7 +65,7 @@ public class QuizServiceImpl implements QuizService {
 		System.out.println("001");
 		List<Question> quList = req.getQuestionList();
 		for (Question qu : quList) {
-			if (qu.getQuId()<= 0 || !StringUtils.hasText(qu.getqTitle()) || !StringUtils.hasText(qu.getOptionType())
+			if (qu.getQuId() <= 0 || !StringUtils.hasText(qu.getqTitle()) || !StringUtils.hasText(qu.getOptionType())
 					|| !StringUtils.hasText(qu.getOption())) {
 				System.out.println("003");
 				return new QuizRes(RtnCode.QUESTION_PARAM_ERROR);
@@ -147,10 +153,10 @@ public class QuizServiceImpl implements QuizService {
 		title = StringUtils.hasText(title) ? title : "";
 		startDate = startDate != null ? startDate : LocalDate.of(1971, 1, 1);
 		endDate = endDate != null ? endDate : LocalDate.of(2099, 12, 31);
-		
+
 		List<Questionnaire> qnList = qnDao
 				.findByTitleContainingAndStartDateGreaterThanEqualAndEndDateLessThanEqual(title, startDate, endDate);
-		
+
 		List<Integer> qnIdList = new ArrayList<>();
 		for (Questionnaire qu : qnList) {
 			qnIdList.add(qu.getId());
@@ -164,7 +170,7 @@ public class QuizServiceImpl implements QuizService {
 			for (Question qu : quList) {
 				if (qu.getQnId() == qn.getId()) {
 					questionList.add(qu);
-					
+
 				}
 			}
 			vo.setQuestionList(questionList);
@@ -174,14 +180,4 @@ public class QuizServiceImpl implements QuizService {
 		return new QuizRes(quizVoList, RtnCode.SUCCESSFUL);
 	}
 
-	
-
-
-
-
-	
-	
-	
-	
-	
 }

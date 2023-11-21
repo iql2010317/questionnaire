@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.example.questionnaire.entity.Question;
 import com.example.questionnaire.entity.Questionnaire;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class QuizVo {
 	
 	//這樣取出來就是一張問卷
 	private Questionnaire questionnaire ;
 
+	
 	private List<Question> questionList ;
 
 	public QuizVo() {

@@ -18,10 +18,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//RestController可以用
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'mysql:mysql-connector-java:8.0.31'
 	//spring security  使用BCryptpasswordEncoder:加密密碼用
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
+	//有密碼的話 要用exclude
 	
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

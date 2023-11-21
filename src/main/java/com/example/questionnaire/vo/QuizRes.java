@@ -20,6 +20,7 @@ public class QuizRes {
 		super();
 		this.rtnCode = rtnCode;
 	}
+	
 
 	public RtnCode getRtnCode() {
 		return rtnCode;

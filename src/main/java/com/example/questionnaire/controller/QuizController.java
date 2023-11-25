@@ -3,6 +3,7 @@ package com.example.questionnaire.controller;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,13 +31,12 @@ public class QuizController {
 //	public QuizRes search(@RequestBody QuizSearchReq req) {
 //		return service.search(req.getTitle(), req.getStartDate(), req.getEndDate());
 //	}
-	
-	@GetMapping(value = "api/quiz/search")
-	public QuizRes search(@RequestParam(value = "title", required = false) String title,
-	                      @RequestParam(value = "startDate", required = false) LocalDate startDate,
-	                      @RequestParam(value = "endDate", required = false) LocalDate endDate) {
-	    return service.search(title, startDate, endDate);
-	}
 
+	@GetMapping(value = "api/quiz/search")
+	public QuizRes search(@RequestParam(value = "title", required = true) String title,
+			@RequestParam(value = "startDate", required = false) LocalDate startDate,
+			@RequestParam(value = "endDate", required = false) LocalDate endDate) {
+		return service.search(title, startDate, endDate);
+	}
 
 }

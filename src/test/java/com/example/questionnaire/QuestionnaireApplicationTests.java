@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.questionnaire.entity.Question;
 import com.example.questionnaire.entity.Questionnaire;
+import com.example.questionnaire.repository.QuestionnaireDao;
 import com.example.questionnaire.service.ifs.QuizService;
 import com.example.questionnaire.vo.QuizReq;
 import com.example.questionnaire.vo.QuizRes;
@@ -20,6 +21,9 @@ class QuestionnaireApplicationTests {
 
 	@Autowired
 	private QuizService quizService;
+
+	@Autowired
+	private QuestionnaireDao qnDao;
 
 	@Test
 	public void test() {
@@ -36,24 +40,35 @@ class QuestionnaireApplicationTests {
 		QuizRes res = quizService.create(req);
 
 	}
-	
-	@Test
-	//搜尋名稱 開始時間 結束時間 可以為空
-	public void searchTest() {
-	    System.out.println("================================");
-	    quizService.search("happy", null, null);
-	    System.out.println("================================");
-	}
-	
-	@Test
-	//搜尋名稱 開始時間 結束時間 可以為空
-	public void searchTest1() {
-	    System.out.println("================================");
-	    quizService.search("happy", null, null);
-	    System.out.println("================================");
-	}
-	
-	
-	
 
+	@Test
+	// 搜尋名稱 開始時間 結束時間 可以為空
+	public void searchTest() {
+		System.out.println("================================");
+		quizService.search("happy", null, null);
+		System.out.println("================================");
+	}
+
+	@Test
+	// 搜尋名稱 開始時間 結束時間 可以為空
+	public void searchTest1() {
+		System.out.println("================================");
+		quizService.search("happy", null, null);
+		System.out.println("================================");
+	}
+
+	@Test
+	public void insertTest() {
+		int res = qnDao.insert("Qa_01", "Qa_01test", false, LocalDate.of(2023, 11, 30), LocalDate.of(2024, 11, 25));
+		System.out.println(res);// 印出1 新增一筆成功
+	}
+
+	@Test
+	public void insertTest2() {
+		int res = qnDao.insertData("Qa_03", "Qa_01test1", false, LocalDate.of(2023, 11, 30),
+				LocalDate.of(2024, 11, 25));
+		System.out.println(res);// 印出1 新增一筆成功
+	}
+
+	
 }

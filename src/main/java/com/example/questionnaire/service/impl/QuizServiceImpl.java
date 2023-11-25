@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -148,11 +149,14 @@ public class QuizServiceImpl implements QuizService {
 		return new QuizRes(RtnCode.SUCCESSFUL);
 	}
 
+	@Cacheable(cacheNames = "search",
+			// key = #title_#startDate_#endDate
+			// key="A01_2023-11-10_2023-11-31"
+			key = "#title.concat('_').concat(#startDate.toString()).concat('_').concat(#endDate.toString())", //
+			unless = "#result.rtnCode.code !=200")
 	@Override
 	public QuizRes search(String title, LocalDate startDate, LocalDate endDate) {
-		title = StringUtils.hasText(title) ? title : "";
-		startDate = startDate != null ? startDate : LocalDate.of(1971, 1, 1);
-		endDate = endDate != null ? endDate : LocalDate.of(2099, 12, 31);
+		
 
 		List<Questionnaire> qnList = qnDao
 				.findByTitleContainingAndStartDateGreaterThanEqualAndEndDateLessThanEqual(title, startDate, endDate);

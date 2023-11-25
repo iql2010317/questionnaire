@@ -1,35 +1,46 @@
 package com.example.questionnaire.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
 public class User {
-	
-	@Column(name="name")
-	private String name;
-	
+
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	@Column(name="phone_number")
+	@Column(name = "num")
+	private int num;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "phone_number")
 	private String phoneNumber;
-	
-	@Column(name="email")
+
+	@Column(name = "email")
 	private String email;
-	
-	@Column(name="age")
+
+	@Column(name = "age")
 	private int age;
-	
-	@Column(name="qn_id")
+
+	@Column(name = "qn_id")
 	private int qnId;
-	
-	@Column(name="q_id")
+
+	@Column(name = "q_id")
 	private int qId;
-	
-	@Column(name="ans")
+
+	@Column(name = "ans")
 	private String ans;
+
+	@Column(name = "date_time")
+	private LocalDateTime dateTime;
 
 	public User() {
 		super();
@@ -102,11 +113,5 @@ public class User {
 	public void setAns(String ans) {
 		this.ans = ans;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }
